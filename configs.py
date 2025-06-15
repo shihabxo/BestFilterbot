@@ -1,77 +1,41 @@
-from os import environ
-from logging import basicConfig, INFO, StreamHandler, getLogger, WARNING, Logger
-from logging.handlers import RotatingFileHandler
-from script import StartTxT, HelpTxT, AboutTxT
+# 📡 API & BOT Settings
+API_ID = 24059088
+API_HASH = "40c03e1bebb18c40760703b09c51df61"
+BOT_TOKEN = "7685758094:AAF9OmztzitHTbjSLfxAF0Kn6LW0ruCnxNo"
 
-basicConfig( level=INFO, format="[%(asctime)s - %(levelname)s] - %(name)s - %(message)s", datefmt='%d-%b-%y %H:%M:%S', handlers=[ RotatingFileHandler("filtersbot.txt", maxBytes=50000000, backupCount=10), StreamHandler() ] )
+# 🗄️ MongoDB Database Settings
+MONGO_URI = "mongodb+srv://Shihabx:Shihabx@cluster0.e0car2d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+DB_NAME = "ShiplaBot"
 
-getLogger("pyrogram").setLevel(WARNING)
+# 🔗 Groups & Logs
+LOG_CHANNEL = -1002716060565     # Error, logs যাবে এখানে
+ADMINS = [1775476699]            # Bot owner(s)
+ALLOW_ALL_GROUPS = True          # যেকোনো গ্রুপে কাজ করবে কি না
 
-def LOGGER(name: str) -> Logger:
-    return getLogger(name)
+# 🔁 Forwarding Settings
+FORWARD_AS_COPY = True           # Copy করে ফাইল পাঠাবে
+BROADCAST_AS_COPY = False        # Broadcast message copy হবে কি না
 
-if bool(environ.get("WEBHOOK", False)):
+# 🚫 URL Lock & Warnings
+URL_LOCK = True                  # গ্রুপে url দিলে warning দিবে
+MAX_WARNINGS = 3                 # কয়বার warning দিলে ban করবে
+BAN_COMMAND = "/ban"             # Ban কমান্ড কী হবে
 
-    try:
-        API_ID = int(environ.get("API_ID", 1234))
-    except Exception as e:
-        print(f"API_ID Invalid: \n\nLogs: {e}")
+# 🙋‍♂️ Welcome Message
+SEND_WELCOME = True              # গ্রুপে কেউ join করলে welcome দিবে
+WELCOME_TEXT = "👋 স্বাগতম! মুভির নাম লিখে সার্চ করুন 🔎"
+WELCOME_DELAY = 2                # কয় সেকেন্ড পর welcome দিবে
+WELCOME_AUTO_DELETE = True       # Welcome মেসেজ auto delete করবে কি না
+WELCOME_DELETE_TIMER = 15        # কয় সেকেন্ড পর মুছে ফেলবে
 
-    try:
-        API_HASH = environ.get("API_HASH", "")
-    except Exception as e:
-        print(f"API_HASH Invalid: \n\nLogs: {e}")
+# 🔍 Auto File Search (Filter feature)
+AUTO_FILE_SEARCH = True          # মেসেজে লেখা অনুযায়ী ফাইল খুঁজে দিবে
 
-    try:
-        BOT_TOKEN = environ.get("BOT_TOKEN", "")
-    except Exception as e:
-        print(f"BOT_TOKEN Invalid: \n\nLogs: {e}")
+# ⚙️ Custom Commands
+COMMAND_PREFIX = "/"             # কমান্ড prefix (যেমন /start, /ban)
+HELP_COMMAND = "/help"           # Help কমান্ড কী হবে
+START_MSG = "🎬 মুভি ফিল্টার বটে স্বাগতম!\n🔎 মুভি খুঁজতে শুধু নাম লিখুন।"
 
-    try:
-        DATABASE_URI = environ.get("DATABASE_URI", "")
-    except Exception as e:
-        print(f"DATABASE_URI Invalid: \n\nLogs: {e}")
-
-    try:
-        DATABASE_NAME = environ.get("DATABASE_NAME", "")
-    except Exception as e:
-        print(f"DATABASE_NAME Invalid: \n\nLogs: {e}")
-
-    try:
-        ADMINS = set(str(x) for x in environ.get("ADMINS", "").split())
-    except Exception as e:
-        print(f"ADMINS Invalid: \n\nLogs: {e}")
-
-    # OPTIONAL - To set alternate BOT COMMANDS
-
-    ADD_FILTER_CMD = environ.get("ADD_FILTER_CMD", "add")
-
-    DELETE_FILTER_CMD = environ.get("DELETE_FILTER_CMD", "del")
-
-    DELETE_ALL_CMD = environ.get("DELETE_ALL_CMD", "delall")
-
-    CONNECT_COMMAND = environ.get("CONNECT_CMD", "connect")
-
-    DISCONNECT_COMMAND = environ.get("DISCONNECT_CMD", "disconnect")
-
-    BOT_PICS = (environ.get('BOT_PICS', "motech")).split()
-
-    FORCE_SUB = environ.get("UPDATE_CHANNEL", "")
-
-    SUPPORT_CHAT = environ.get("SUPPORT_CHAT", "official_learning_bots_Support")
-
-    START_TXT = environ.get("START_TXT", StartTxT)
-
-    HELP_TXT = environ.get("HELP_MESSAGE", HelpTxT)
-
-    ABOUT_TXT = environ.get("ABOUT_MESSAGE", AboutTxT)
-
-    AUTO_DELETE = bool(environ.get("AUTO_DELETE", True))
-
-    AUTO_DELETE_SECOND = int(environ.get("AUTO_DELETE_SECOND", 300))
-
-    PORT = environ.get('PORT', '8080')
-
-else:
-
-    print("WEBHOOK is Disabled 😴")
+# 📛 Others
+DELETE_COMMANDS = True           # /start বা /ban দিলে message auto delete হবে কি না
+FILE_SEND_LOG = True             # কোন ইউজারকে কী ফাইল পাঠানো হলো, সেটা log করবে
